@@ -123,8 +123,13 @@ export const submitRow = () => dispatch => {
 				} else {
 					const correctDigits = data.data.correctDigits;
 					const misplacedDigits = data.data.misplacedDigits;
-					let history = store.getState().historyGuesses;
-					history.unshift(row);
+					let historyGuesses = store.getState().historyGuesses;
+					historyGuesses.unshift(row);
+					let historyResults = store.getState().historyResults;
+					historyResults.unshift({
+						correctDigits: correctDigits,
+						misplacedDigits: misplacedDigits
+					});
 					dispatch({
 						type: "UPDATE_REMAINING_GUESSES",
 						payload: remainingGuesses
@@ -139,7 +144,7 @@ export const submitRow = () => dispatch => {
 					});
 					dispatch({
 						type: "UPDATE_HISTORY_GUESSES",
-						payload: history
+						payload: historyGuesses
 					});
 					dispatch(resetCurrentRow());
 					dispatch(disableRowSubmission());

@@ -1,7 +1,7 @@
 import { combineReducers } from "redux";
 
 const playerIdReducer = (
-	state = "c0f42b1f-3a1b-40e3-957d-2eb5a27604cf",
+	state = "e504fac6-d06c-4ff7-8ce3-74d73327d681",
 	//state = null,
 	action
 ) => {
@@ -142,6 +142,16 @@ const historyGuessesReducer = (state = [], action) => {
 	}
 };
 
+const historyResultsReducer = (state = [], action) => {
+	switch (action.type) {
+		case "UPDATE_HISTORY_RESULTS": {
+			return action.payload;
+		}
+		default:
+			return state;
+	}
+};
+
 const allReducers = combineReducers({
 	playerId: playerIdReducer,
 	playerName: playerNameReducer,
@@ -154,7 +164,8 @@ const allReducers = combineReducers({
 	canSubmitRow: canSubmitRowReducer,
 	correctDigits: correctDigitsReducer,
 	misplacedDigits: misplacedDigitsReducer,
-	historyGuesses: historyGuessesReducer
+	historyGuesses: historyGuessesReducer,
+	historyResults: historyResultsReducer
 });
 
 export default allReducers;

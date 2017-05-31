@@ -10,12 +10,11 @@ class HistoryRows extends PureComponent {
 
 		if (roundNumber > 0) {
 			const historyGuesses = this.props.historyGuesses;
-			console.log(1, historyGuesses);
-
+			const historyResults = this.props.historyResults;
 			const history = Object.keys(historyGuesses).map(index => {
-				const rowNumber = roundNumber - Number(index);
-				console.log(100, historyGuesses, rowNumber, roundNumber, index);
-				const row = Object.keys(historyGuesses[index]).map(rowIndex => {
+				const historyGuessesRow = Object.keys(
+					historyGuesses[index]
+				).map(rowIndex => {
 					const slotContent = historyGuesses[index][rowIndex];
 					const color = colors[slotContent];
 					return (
@@ -32,7 +31,62 @@ class HistoryRows extends PureComponent {
 						/>
 					);
 				});
-				return <div key={index}>{row}</div>;
+				const rowResult = historyResults[index];
+				const blackPegCount = rowResult.correctDigits;
+				const whitePegCount = rowResult.misplacedDigits;
+				const emptySlotCount = 3 - blackPegCount - whitePegCount;
+				let historyResultsRow = [];
+				for (let i = 0; i <= emptySlotCount; i++) {
+					historyResultsRow.push(
+						<input
+							style={{
+								margin: 2,
+								width: 5,
+								height: 5,
+								backgroundColor: "lightGrey",
+								border: "lightGrey, solid, 1px",
+								borderRadius: 30
+							}}
+							key={i}
+						/>
+					);
+				}
+				for (let i = 0; i <= whitePegCount; i++) {
+					historyResultsRow.unshift(
+						<input
+							style={{
+								margin: 2,
+								width: 5,
+								height: 5,
+								backgroundColor: "white",
+								border: "grey 1px solid",
+								borderRadius: 30
+							}}
+							key={i + emptySlotCount}
+						/>
+					);
+				}
+				for (let i = 0; i <= blackPegCount; i++) {
+					historyResultsRow.unshift(
+						<input
+							style={{
+								margin: 2,
+								width: 5,
+								height: 5,
+								backgroundColor: "black",
+								border: "black solid 1px",
+								borderRadius: 30
+							}}
+							key={i + emptySlotCount + whitePegCount}
+						/>
+					);
+				}
+				return (
+					<div key={index}>
+						<span>{historyGuessesRow}</span>
+						<span>{historyResultsRow}</span>
+					</div>
+				);
 			});
 
 			return (
@@ -50,7 +104,8 @@ class HistoryRows extends PureComponent {
 export default connect(
 	storeState => ({
 		remainingGuesses: storeState.remainingGuesses,
-		historyGuesses: storeState.historyGuesses
+		historyGuesses: storeState.historyGuesses,
+		historyResults: storeState.historyResults
 	}),
 	{
 		submitRow: actions.submitRow
