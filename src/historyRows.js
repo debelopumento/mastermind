@@ -34,9 +34,9 @@ class HistoryRows extends PureComponent {
 				const rowResult = historyResults[index];
 				const blackPegCount = rowResult.correctDigits;
 				const whitePegCount = rowResult.misplacedDigits;
-				const emptySlotCount = 3 - blackPegCount - whitePegCount;
+				const emptySlotCount = 4 - blackPegCount - whitePegCount;
 				let historyResultsRow = [];
-				for (let i = 0; i <= emptySlotCount; i++) {
+				for (let i = 0; i < emptySlotCount; i++) {
 					historyResultsRow.push(
 						<input
 							style={{
@@ -44,14 +44,14 @@ class HistoryRows extends PureComponent {
 								width: 5,
 								height: 5,
 								backgroundColor: "lightGrey",
-								border: "lightGrey, solid, 1px",
+								border: "lightGrey, solid, 0.5px",
 								borderRadius: 30
 							}}
 							key={i}
 						/>
 					);
 				}
-				for (let i = 0; i <= whitePegCount; i++) {
+				for (let i = 0; i < whitePegCount; i++) {
 					historyResultsRow.unshift(
 						<input
 							style={{
@@ -59,14 +59,14 @@ class HistoryRows extends PureComponent {
 								width: 5,
 								height: 5,
 								backgroundColor: "white",
-								border: "grey 1px solid",
+								border: "grey, solid, 0.5px",
 								borderRadius: 30
 							}}
 							key={i + emptySlotCount}
 						/>
 					);
 				}
-				for (let i = 0; i <= blackPegCount; i++) {
+				for (let i = 0; i < blackPegCount; i++) {
 					historyResultsRow.unshift(
 						<input
 							style={{
@@ -74,7 +74,7 @@ class HistoryRows extends PureComponent {
 								width: 5,
 								height: 5,
 								backgroundColor: "black",
-								border: "black solid 1px",
+								border: "black, solid, 0.5px",
 								borderRadius: 30
 							}}
 							key={i + emptySlotCount + whitePegCount}

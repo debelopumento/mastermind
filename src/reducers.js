@@ -1,7 +1,7 @@
 import { combineReducers } from "redux";
 
 const playerIdReducer = (
-	state = "e504fac6-d06c-4ff7-8ce3-74d73327d681",
+	state = "f8d19d9b-cee4-4441-b82e-5e71e3543021",
 	//state = null,
 	action
 ) => {
