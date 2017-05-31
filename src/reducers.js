@@ -29,6 +29,10 @@ const playerWinsReducer = (state = 0, action) => {
 		case "UPDATE_PLAYER_WINS": {
 			return action.payload;
 		}
+		case "INCREMENT_PLAYER_WINS": {
+			const count = state + 1;
+			return count;
+		}
 		default:
 			return state;
 	}

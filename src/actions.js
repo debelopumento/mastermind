@@ -21,7 +21,25 @@ export const startNewGame = () => dispatch => {
 	axios
 		.post(newGameUrl)
 		.then(gameData => {
-			console.log(gameData);
+			dispatch({
+				type: "UPDATE_REMAINING_GUESSES",
+				payload: 10
+			});
+			dispatch({
+				type: "UPDATE_CORRECT_DIGITS",
+				payload: 0
+			});
+			dispatch({
+				type: "UPDATE_MISPLACED_DIGITS",
+				payload: 0
+			});
+			dispatch({
+				type: "UPDATE_HISTORY_GUESSES",
+				payload: []
+			});
+			dispatch(resetCurrentRow());
+
+			dispatch(disableRowSubmission());
 		})
 		.catch(e => {
 			console.log(e);
@@ -92,49 +110,40 @@ export const submitRow = () => dispatch => {
 					type: "INCREMENT_PLAYER_LOSSES",
 					payload: null
 				});
-				dispatch(resetCurrentRow());
 				dispatch(startNewGame());
-				dispatch({
-					type: "UPDATE_REMAINING_GUESSES",
-					payload: 10
-				});
-				dispatch({
-					type: "UPDATE_CORRECT_DIGITS",
-					payload: 0
-				});
-				dispatch({
-					type: "UPDATE_MISPLACED_DIGITS",
-					payload: 0
-				});
-				dispatch({
-					type: "UPDATE_HISTORY_GUESSES",
-					payload: []
-				});
-				dispatch(disableRowSubmission());
 			} else {
 				const correct = data.data.wasCorrect;
-				const correctDigits = data.data.correctDigits;
-				const misplacedDigits = data.data.misplacedDigits;
-				let history = store.getState().historyGuesses;
-				history.unshift(row);
-				dispatch({
-					type: "UPDATE_REMAINING_GUESSES",
-					payload: remainingGuesses
-				});
-				dispatch({
-					type: "UPDATE_CORRECT_DIGITS",
-					payload: correctDigits
-				});
-				dispatch({
-					type: "UPDATE_MISPLACED_DIGITS",
-					payload: misplacedDigits
-				});
-				dispatch({
-					type: "UPDATE_HISTORY_GUESSES",
-					payload: history
-				});
-				dispatch(resetCurrentRow());
-				dispatch(disableRowSubmission());
+				if (correct) {
+					alert("Correct Answer! Start New Game.");
+					dispatch({
+						type: "INCREMENT_PLAYER_WINS",
+						payload: null
+					});
+					dispatch(startNewGame());
+				} else {
+					const correctDigits = data.data.correctDigits;
+					const misplacedDigits = data.data.misplacedDigits;
+					let history = store.getState().historyGuesses;
+					history.unshift(row);
+					dispatch({
+						type: "UPDATE_REMAINING_GUESSES",
+						payload: remainingGuesses
+					});
+					dispatch({
+						type: "UPDATE_CORRECT_DIGITS",
+						payload: correctDigits
+					});
+					dispatch({
+						type: "UPDATE_MISPLACED_DIGITS",
+						payload: misplacedDigits
+					});
+					dispatch({
+						type: "UPDATE_HISTORY_GUESSES",
+						payload: history
+					});
+					dispatch(resetCurrentRow());
+					dispatch(disableRowSubmission());
+				}
 			}
 		})
 		.catch(e => {
