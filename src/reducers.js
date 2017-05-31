@@ -39,6 +39,10 @@ const playerLossesReducer = (state = 0, action) => {
 		case "UPDATE_PLAYER_LOSSES": {
 			return action.payload;
 		}
+		case "INCREMENT_PLAYER_LOSSES": {
+			const count = state + 1;
+			return count;
+		}
 		default:
 			return state;
 	}

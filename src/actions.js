@@ -15,6 +15,19 @@ export const getAllPlayerStats = () => dispatch => {
 		});
 };
 
+export const startNewGame = () => dispatch => {
+	const playerId = store.getState().playerId;
+	const newGameUrl = baseUrl + `api/player/${playerId}/new-game`;
+	axios
+		.post(newGameUrl)
+		.then(gameData => {
+			console.log(gameData);
+		})
+		.catch(e => {
+			console.log(e);
+		});
+};
+
 export const registerPlayer = name => dispatch => {
 	const url = baseUrl + "api/player";
 	const reqBody = { name: name };
@@ -34,15 +47,7 @@ export const registerPlayer = name => dispatch => {
 				type: "ACTIVATE_GAME",
 				payload: null
 			});
-			const newGameUrl = baseUrl + `api/player/${playerId}/new-game`;
-			axios
-				.post(newGameUrl)
-				.then(gameData => {
-					console.log(gameData);
-				})
-				.catch(e => {
-					console.log(e);
-				});
+			dispatch(startNewGame());
 		})
 		.catch(e => {
 			console.log(e);
@@ -59,6 +64,16 @@ export const updateCurrentRow = input => ({
 	payload: input
 });
 
+export const resetCurrentRow = () => ({
+	type: "RESET_CURRENT_ROW",
+	payload: null
+});
+
+export const disableRowSubmission = () => ({
+	type: "DISABLE_ROW_SUBMISSION",
+	payload: null
+});
+
 export const submitRow = () => dispatch => {
 	const playerId = store.getState().playerId;
 	const row = store.getState().currentRow;
@@ -70,36 +85,57 @@ export const submitRow = () => dispatch => {
 	axios
 		.post(url, reqBody)
 		.then(data => {
-			const correct = data.data.wasCorrect;
-			const correctDigits = data.data.correctDigits;
-			const misplacedDigits = data.data.misplacedDigits;
 			const remainingGuesses = data.data.remainingGuesses;
-			let history = store.getState().historyGuesses;
-			history.unshift(row);
-			dispatch({
-				type: "UPDATE_REMAINING_GUESSES",
-				payload: remainingGuesses
-			});
-			dispatch({
-				type: "UPDATE_CORRECT_DIGITS",
-				payload: correctDigits
-			});
-			dispatch({
-				type: "UPDATE_MISPLACED_DIGITS",
-				payload: misplacedDigits
-			});
-			dispatch({
-				type: "UPDATE_HISTORY_GUESSES",
-				payload: history
-			});
-			dispatch({
-				type: "RESET_CURRENT_ROW",
-				payload: null
-			});
-			dispatch({
-				type: "DISABLE_ROW_SUBMISSION",
-				payload: null
-			});
+			if (remainingGuesses === 0) {
+				alert("No more remaining guesses. Start New Game.");
+				dispatch({
+					type: "INCREMENT_PLAYER_LOSSES",
+					payload: null
+				});
+				dispatch(resetCurrentRow());
+				dispatch(startNewGame());
+				dispatch({
+					type: "UPDATE_REMAINING_GUESSES",
+					payload: 10
+				});
+				dispatch({
+					type: "UPDATE_CORRECT_DIGITS",
+					payload: 0
+				});
+				dispatch({
+					type: "UPDATE_MISPLACED_DIGITS",
+					payload: 0
+				});
+				dispatch({
+					type: "UPDATE_HISTORY_GUESSES",
+					payload: []
+				});
+				dispatch(disableRowSubmission());
+			} else {
+				const correct = data.data.wasCorrect;
+				const correctDigits = data.data.correctDigits;
+				const misplacedDigits = data.data.misplacedDigits;
+				let history = store.getState().historyGuesses;
+				history.unshift(row);
+				dispatch({
+					type: "UPDATE_REMAINING_GUESSES",
+					payload: remainingGuesses
+				});
+				dispatch({
+					type: "UPDATE_CORRECT_DIGITS",
+					payload: correctDigits
+				});
+				dispatch({
+					type: "UPDATE_MISPLACED_DIGITS",
+					payload: misplacedDigits
+				});
+				dispatch({
+					type: "UPDATE_HISTORY_GUESSES",
+					payload: history
+				});
+				dispatch(resetCurrentRow());
+				dispatch(disableRowSubmission());
+			}
 		})
 		.catch(e => {
 			console.log(e);
