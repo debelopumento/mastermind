@@ -4,6 +4,7 @@ import * as actions from "./actions";
 import colors from "./colors";
 import CheckRowButton from "./checkRowButton";
 
+//this component shows the active row play is working on
 class CurrentRow extends PureComponent {
 	handleClick = event => {
 		if (this.props.selectedNumber === 0) {
@@ -23,9 +24,8 @@ class CurrentRow extends PureComponent {
 		const currentRowContent = this.props.currentRow;
 		const currentRow = Object.keys(currentRowContent).map(index => {
 			const slotContent = currentRowContent[index];
-			const color = slotContent !== null
-				? colors[slotContent]
-				: "lightGrey";
+			const color = slotContent !== null ? colors[slotContent] : "white";
+			const border = slotContent !== null ? 0 : "1px dotted grey";
 			return (
 				<button
 					style={{
@@ -33,7 +33,7 @@ class CurrentRow extends PureComponent {
 						width: 20,
 						height: 20,
 						backgroundColor: color,
-						border: 0,
+						border: border,
 						borderRadius: 30
 					}}
 					key={index}
@@ -45,7 +45,6 @@ class CurrentRow extends PureComponent {
 		return (
 			<div>
 				<span>{currentRow}</span>
-
 				<CheckRowButton />
 			</div>
 		);

@@ -27,7 +27,7 @@ class ColorSelection extends PureComponent {
 			);
 		});
 		return (
-			<div>
+			<div style={{ borderTop: "0.5px dashed lightGrey" }}>
 				<div>{colorChoices}</div>
 				<div>
 					Selected color: <button

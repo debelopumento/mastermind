@@ -5,11 +5,14 @@ import Game from "./game";
 class App extends Component {
 	render() {
 		return (
-			<div>
-				<h2>Mastermind</h2>
-				<PlayerInfo />
-				<Game />
-			</div>
+			//Player Info shows player's name and stats
+			(
+				<div>
+					<h2>Mastermind</h2>
+					<PlayerInfo />
+					<Game />
+				</div>
+			)
 		);
 	}
 }

@@ -11,6 +11,7 @@ class Game extends PureComponent {
 				<div>
 					<MainBoard />
 					<ColorSelection />
+
 				</div>
 			);
 		}
@@ -24,6 +25,6 @@ export default connect(
 		activeGame: storeState.activeGame
 	}),
 	{
-		registerPlayer: actions.registerPlayer
+		submitRow: actions.submitRow
 	}
 )(Game);

@@ -8,7 +8,14 @@ import EmptyRow from "./emptyRow";
 class MainBoard extends PureComponent {
 	render() {
 		return (
-			<div>
+			<div
+				style={{
+					width: 220,
+					paddingLeft: 60,
+					textAlign: "left",
+					margin: "auto"
+				}}
+			>
 				<EmptyRow />
 				<CurrentRow />
 				<HistoryRows />

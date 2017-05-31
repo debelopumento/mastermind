@@ -16,8 +16,8 @@ class EmptyRow extends PureComponent {
 						margin: 10,
 						width: 20,
 						height: 20,
-						backgroundColor: "lightGrey",
-						border: 0,
+						backgroundColor: "white",
+						border: "1px dotted grey",
 						borderRadius: 30
 					}}
 				/>

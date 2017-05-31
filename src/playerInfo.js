@@ -33,17 +33,32 @@ class PlayerInfo extends PureComponent {
 						onChange={this.handleChange}
 						onKeyPress={this._handleKeyPress}
 					/>
-					<input type="submit" onClick={this.handleSubmit} />
+					<input
+						style={{
+							margin: 5,
+							width: 50,
+							border: "0.5px dotted #1A9C9C",
+							color: "#1A9C9C",
+							backgroundColor: "white"
+						}}
+						type="submit"
+						onClick={this.handleSubmit}
+					/>
 				</div>
 			);
 		}
 		return (
 			<div>
-
 				<p>Hello, {this.props.playerName}</p>
-				<span>Wins: {this.props.playerWins}</span>
-				<span>Losses: {this.props.playerLosses}</span>
-				<span>Remaining Guesses: {this.props.remainingGuesses}</span>
+				<span style={{ margin: 10 }}>
+					Wins: {this.props.playerWins}
+				</span>
+				<span style={{ margin: 10 }}>
+					Losses: {this.props.playerLosses}
+				</span>
+				<span style={{ margin: 10 }}>
+					Remaining Guesses: {this.props.remainingGuesses}
+				</span>
 			</div>
 		);
 	}

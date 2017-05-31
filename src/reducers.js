@@ -1,10 +1,6 @@
 import { combineReducers } from "redux";
 
-const playerIdReducer = (
-	state = "f8d19d9b-cee4-4441-b82e-5e71e3543021",
-	//state = null,
-	action
-) => {
+const playerIdReducer = (state = null, action) => {
 	switch (action.type) {
 		case "UPDATE_PLAYER_ID": {
 			return action.payload;
@@ -14,7 +10,7 @@ const playerIdReducer = (
 	}
 };
 
-const playerNameReducer = (state = "Di", action) => {
+const playerNameReducer = (state = null, action) => {
 	switch (action.type) {
 		case "UPDATE_PLAYER_NAME": {
 			return action.payload;
@@ -52,7 +48,7 @@ const playerLossesReducer = (state = 0, action) => {
 	}
 };
 
-const activeGameReducer = (state = true, action) => {
+const activeGameReducer = (state = false, action) => {
 	switch (action.type) {
 		case "ACTIVATE_GAME": {
 			return true;

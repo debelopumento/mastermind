@@ -44,7 +44,7 @@ class HistoryRows extends PureComponent {
 								width: 5,
 								height: 5,
 								backgroundColor: "lightGrey",
-								border: "lightGrey, solid, 0.5px",
+								border: 0,
 								borderRadius: 30
 							}}
 							key={i}
@@ -59,7 +59,7 @@ class HistoryRows extends PureComponent {
 								width: 5,
 								height: 5,
 								backgroundColor: "white",
-								border: "grey, solid, 0.5px",
+								border: "grey, solid, 1px",
 								borderRadius: 30
 							}}
 							key={i + emptySlotCount}
@@ -73,8 +73,8 @@ class HistoryRows extends PureComponent {
 								margin: 2,
 								width: 5,
 								height: 5,
-								backgroundColor: "black",
-								border: "black, solid, 0.5px",
+								backgroundColor: "#333",
+								border: "black, solid, 1px",
 								borderRadius: 30
 							}}
 							key={i + emptySlotCount + whitePegCount}

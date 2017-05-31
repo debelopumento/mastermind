@@ -11,7 +11,15 @@ class CheckRowButton extends PureComponent {
 		if (this.props.canSubmitRow) {
 			return (
 				<span>
-					<button onClick={this.submitRow}>
+					<button
+						style={{
+							width: 50,
+							border: "1px solid #1A9C9C",
+							color: "#1A9C9C",
+							backgroundColor: "white"
+						}}
+						onClick={this.submitRow}
+					>
 						Submit
 					</button>
 				</span>
@@ -19,7 +27,15 @@ class CheckRowButton extends PureComponent {
 		}
 		return (
 			<span>
-				<button disabled="disabled">
+				<button
+					style={{
+						width: 50,
+						border: "1px solid #85CDCA",
+						color: "#85CDCA",
+						backgroundColor: "white"
+					}}
+					disabled="disabled"
+				>
 					Submit
 				</button>
 			</span>
