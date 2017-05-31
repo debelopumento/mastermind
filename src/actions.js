@@ -70,14 +70,15 @@ export const submitRow = () => dispatch => {
 	axios
 		.post(url, reqBody)
 		.then(data => {
-			console.log(data);
 			const correct = data.data.wasCorrect;
 			const correctDigits = data.data.correctDigits;
 			const misplacedDigits = data.data.misplacedDigits;
-			console.log(222, correctDigits, misplacedDigits);
+			const remainingGuesses = data.data.remainingGuesses;
+			let history = store.getState().historyGuesses;
+			history.unshift(row);
 			dispatch({
-				type: "REDUCE_REMAINING_GUESSES",
-				payload: null
+				type: "UPDATE_REMAINING_GUESSES",
+				payload: remainingGuesses
 			});
 			dispatch({
 				type: "UPDATE_CORRECT_DIGITS",
@@ -86,6 +87,18 @@ export const submitRow = () => dispatch => {
 			dispatch({
 				type: "UPDATE_MISPLACED_DIGITS",
 				payload: misplacedDigits
+			});
+			dispatch({
+				type: "UPDATE_HISTORY_GUESSES",
+				payload: history
+			});
+			dispatch({
+				type: "RESET_CURRENT_ROW",
+				payload: null
+			});
+			dispatch({
+				type: "DISABLE_ROW_SUBMISSION",
+				payload: null
 			});
 		})
 		.catch(e => {

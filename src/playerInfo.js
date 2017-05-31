@@ -43,7 +43,7 @@ class PlayerInfo extends PureComponent {
 				<p>Hello, {this.props.playerName}</p>
 				<span>Wins: {this.props.playerWins}</span>
 				<span>Losses: {this.props.playerLosses}</span>
-
+				<span>Remaining Guesses: {this.props.remainingGuesses}</span>
 			</div>
 		);
 	}
@@ -54,7 +54,8 @@ export default connect(
 		playerId: storeState.playerId,
 		playerName: storeState.playerName,
 		playerWins: storeState.playerWins,
-		playerLosses: storeState.playerLosses
+		playerLosses: storeState.playerLosses,
+		remainingGuesses: storeState.remainingGuesses
 	}),
 	{
 		registerPlayer: actions.registerPlayer

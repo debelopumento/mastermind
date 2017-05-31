@@ -1,7 +1,7 @@
 import { combineReducers } from "redux";
 
 const playerIdReducer = (
-	state = "7490a8de-f54e-4c3a-ba92-ebf69a6a5fe0",
+	state = "c0f42b1f-3a1b-40e3-957d-2eb5a27604cf",
 	//state = null,
 	action
 ) => {
@@ -69,6 +69,9 @@ const currentRowReducer = (state = [null, null, null, null], action) => {
 		case "UPDATE_CURRENT_ROW": {
 			return action.payload;
 		}
+		case "RESET_CURRENT_ROW": {
+			return [null, null, null, null];
+		}
 		default:
 			return state;
 	}
@@ -76,6 +79,9 @@ const currentRowReducer = (state = [null, null, null, null], action) => {
 
 const remainingGuessesReducer = (state = 10, action) => {
 	switch (action.type) {
+		case "UPDATE_REMAINING_GUESSES": {
+			return action.payload;
+		}
 		case "REDUCE_REMAINING_GUESSES": {
 			const remainingGuesses = state - 1;
 			return remainingGuesses;
@@ -89,6 +95,9 @@ const canSubmitRowReducer = (state = false, action) => {
 	switch (action.type) {
 		case "ENABLE_ROW_SUBMISSION": {
 			return true;
+		}
+		case "DISABLE_ROW_SUBMISSION": {
+			return false;
 		}
 		default:
 			return state;
@@ -115,6 +124,16 @@ const misplacedDigitsReducer = (state = 0, action) => {
 	}
 };
 
+const historyGuessesReducer = (state = [], action) => {
+	switch (action.type) {
+		case "UPDATE_HISTORY_GUESSES": {
+			return action.payload;
+		}
+		default:
+			return state;
+	}
+};
+
 const allReducers = combineReducers({
 	playerId: playerIdReducer,
 	playerName: playerNameReducer,
@@ -126,7 +145,8 @@ const allReducers = combineReducers({
 	remainingGuesses: remainingGuessesReducer,
 	canSubmitRow: canSubmitRowReducer,
 	correctDigits: correctDigitsReducer,
-	misplacedDigits: misplacedDigitsReducer
+	misplacedDigits: misplacedDigitsReducer,
+	historyGuesses: historyGuessesReducer
 });
 
 export default allReducers;
