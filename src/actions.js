@@ -1,9 +1,8 @@
 import axios from "axios";
-import store from "../store";
 
 const baseUrl = "http://challenge.thebeans.io:3000/";
 
-export const getAllPlayerStats = () => {
+export const getAllPlayerStats = () => dispatch => {
 	const url = baseUrl + "api/stats";
 	axios
 		.get(url)
@@ -21,7 +20,19 @@ export const registerPlayer = name => dispatch => {
 	return axios
 		.post(url, reqBody)
 		.then(data => {
-			console.log(data);
+			const playerId = data.data.playerId;
+			dispatch({
+				type: "UPDATE_PLAYER_ID",
+				payload: playerId
+			});
+			dispatch({
+				type: "UPDATE_PLAYER_NAME",
+				payload: name
+			});
+			dispatch({
+				type: "ACTIVATE_GAME",
+				payload: null
+			});
 		})
 		.catch(e => {
 			console.log(e);
