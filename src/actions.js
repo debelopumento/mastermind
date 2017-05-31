@@ -38,3 +38,8 @@ export const registerPlayer = name => dispatch => {
 			console.log(e);
 		});
 };
+
+export const updateSelectedNumber = number => ({
+	type: "UPDATE_SELECTED_NUMBER",
+	payload: number
+});

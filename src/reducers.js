@@ -10,7 +10,7 @@ const playerIdReducer = (state = null, action) => {
 	}
 };
 
-const playerNameReducer = (state = null, action) => {
+const playerNameReducer = (state = "name", action) => {
 	switch (action.type) {
 		case "UPDATE_PLAYER_NAME": {
 			return action.payload;
@@ -40,10 +40,20 @@ const playerLossesReducer = (state = 0, action) => {
 	}
 };
 
-const activeGameReducer = (state = false, action) => {
+const activeGameReducer = (state = true, action) => {
 	switch (action.type) {
 		case "ACTIVATE_GAME": {
 			return true;
+		}
+		default:
+			return state;
+	}
+};
+
+const selectedNumberReducer = (state = 0, action) => {
+	switch (action.type) {
+		case "UPDATE_SELECTED_NUMBER": {
+			return action.payload;
 		}
 		default:
 			return state;
@@ -55,7 +65,8 @@ const allReducers = combineReducers({
 	playerName: playerNameReducer,
 	playerWins: playerWinsReducer,
 	playerLosses: playerLossesReducer,
-	activeGame: activeGameReducer
+	activeGame: activeGameReducer,
+	selectedNumber: selectedNumberReducer
 });
 
 export default allReducers;
