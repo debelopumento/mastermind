@@ -6,7 +6,7 @@ class CheckRowButton extends PureComponent {
 	submitRow = () => {
 		this.props.submitRow();
 	};
-
+	//when all four slots in current row are filled, submit button is enabled
 	render() {
 		if (this.props.canSubmitRow) {
 			return (

@@ -1,12 +1,13 @@
 import React, { PureComponent } from "react";
-import { connect } from "react-redux";
-import * as actions from "./actions";
 import CurrentRow from "./currentRow";
 import HistoryRows from "./historyRows";
 import EmptyRow from "./emptyRow";
 
 class MainBoard extends PureComponent {
 	render() {
+		//The board is devided into three parts:
+		//the empty part above the active row
+		//and the history rows below the active row
 		return (
 			<div
 				style={{
