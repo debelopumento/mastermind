@@ -5,23 +5,28 @@ import Slot from "./slot";
 import colors from "./colors";
 
 class MainBoard extends PureComponent {
-	state = {
-		currentRowContent: [
-			{ column: 0, content: 1 },
-			{ column: 1, content: null },
-			{ column: 2, content: 3 },
-			{ column: 3, content: null }
-		]
+	handleClick = event => {
+		if (this.props.selectedNumber === 0) {
+			alert("Please pick a color first!");
+		} else {
+			const updatedSlotIndex = event.target.id;
+			let row = this.props.currentRow;
+			row[updatedSlotIndex] = this.props.selectedNumber;
+
+			this.props.updateCurrentRow(row);
+			this.props.updateSelectedNumber("null");
+		}
 	};
+
 	render() {
-		const currentRowContent = this.state.currentRowContent;
+		const currentRowContent = this.props.currentRow;
 		const currentRow = Object.keys(currentRowContent).map(index => {
 			const slotContent = currentRowContent[index];
-			const color = slotContent.content !== null
-				? colors[slotContent.content]
+			const color = slotContent !== null
+				? colors[slotContent]
 				: "lightGrey";
 			return (
-				<input
+				<button
 					style={{
 						margin: 10,
 						width: 20,
@@ -30,6 +35,8 @@ class MainBoard extends PureComponent {
 						border: 0
 					}}
 					key={index}
+					id={index}
+					onClick={this.handleClick}
 				/>
 			);
 		});
@@ -39,9 +46,11 @@ class MainBoard extends PureComponent {
 
 export default connect(
 	storeState => ({
-		activeGame: storeState.activeGame
+		selectedNumber: storeState.selectedNumber,
+		currentRow: storeState.currentRow
 	}),
 	{
-		registerPlayer: actions.registerPlayer
+		updateCurrentRow: actions.updateCurrentRow,
+		updateSelectedNumber: actions.updateSelectedNumber
 	}
 )(MainBoard);

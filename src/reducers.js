@@ -50,9 +50,19 @@ const activeGameReducer = (state = true, action) => {
 	}
 };
 
-const selectedNumberReducer = (state = 0, action) => {
+const selectedNumberReducer = (state = null, action) => {
 	switch (action.type) {
 		case "UPDATE_SELECTED_NUMBER": {
+			return action.payload;
+		}
+		default:
+			return state;
+	}
+};
+
+const currentRowReducer = (state = [null, null, null, null], action) => {
+	switch (action.type) {
+		case "UPDATE_CURRENT_ROW": {
 			return action.payload;
 		}
 		default:
@@ -66,7 +76,8 @@ const allReducers = combineReducers({
 	playerWins: playerWinsReducer,
 	playerLosses: playerLossesReducer,
 	activeGame: activeGameReducer,
-	selectedNumber: selectedNumberReducer
+	selectedNumber: selectedNumberReducer,
+	currentRow: currentRowReducer
 });
 
 export default allReducers;

@@ -1,4 +1,5 @@
 import axios from "axios";
+import store from "./store";
 
 const baseUrl = "http://challenge.thebeans.io:3000/";
 
@@ -42,4 +43,9 @@ export const registerPlayer = name => dispatch => {
 export const updateSelectedNumber = number => ({
 	type: "UPDATE_SELECTED_NUMBER",
 	payload: number
+});
+
+export const updateCurrentRow = input => ({
+	type: "UPDATE_CURRENT_ROW",
+	payload: input
 });
