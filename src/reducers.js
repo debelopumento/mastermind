@@ -1,6 +1,10 @@
 import { combineReducers } from "redux";
 
-const playerIdReducer = (state = null, action) => {
+const playerIdReducer = (
+	state = "7490a8de-f54e-4c3a-ba92-ebf69a6a5fe0",
+	//state = null,
+	action
+) => {
 	switch (action.type) {
 		case "UPDATE_PLAYER_ID": {
 			return action.payload;
@@ -10,7 +14,7 @@ const playerIdReducer = (state = null, action) => {
 	}
 };
 
-const playerNameReducer = (state = "name", action) => {
+const playerNameReducer = (state = "Di", action) => {
 	switch (action.type) {
 		case "UPDATE_PLAYER_NAME": {
 			return action.payload;
@@ -70,6 +74,47 @@ const currentRowReducer = (state = [null, null, null, null], action) => {
 	}
 };
 
+const remainingGuessesReducer = (state = 10, action) => {
+	switch (action.type) {
+		case "REDUCE_REMAINING_GUESSES": {
+			const remainingGuesses = state - 1;
+			return remainingGuesses;
+		}
+		default:
+			return state;
+	}
+};
+
+const canSubmitRowReducer = (state = false, action) => {
+	switch (action.type) {
+		case "ENABLE_ROW_SUBMISSION": {
+			return true;
+		}
+		default:
+			return state;
+	}
+};
+
+const correctDigitsReducer = (state = 0, action) => {
+	switch (action.type) {
+		case "UPDATE_CORRECT_DIGITS": {
+			return action.payload;
+		}
+		default:
+			return state;
+	}
+};
+
+const misplacedDigitsReducer = (state = 0, action) => {
+	switch (action.type) {
+		case "UPDATE_MISPLACED_DIGITS": {
+			return action.payload;
+		}
+		default:
+			return state;
+	}
+};
+
 const allReducers = combineReducers({
 	playerId: playerIdReducer,
 	playerName: playerNameReducer,
@@ -77,7 +122,11 @@ const allReducers = combineReducers({
 	playerLosses: playerLossesReducer,
 	activeGame: activeGameReducer,
 	selectedNumber: selectedNumberReducer,
-	currentRow: currentRowReducer
+	currentRow: currentRowReducer,
+	remainingGuesses: remainingGuessesReducer,
+	canSubmitRow: canSubmitRowReducer,
+	correctDigits: correctDigitsReducer,
+	misplacedDigits: misplacedDigitsReducer
 });
 
 export default allReducers;

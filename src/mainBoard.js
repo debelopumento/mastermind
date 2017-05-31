@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import * as actions from "./actions";
 import Slot from "./slot";
 import colors from "./colors";
+import CheckRowButton from "./checkRowButton";
 
 class MainBoard extends PureComponent {
 	handleClick = event => {
@@ -15,7 +16,12 @@ class MainBoard extends PureComponent {
 
 			this.props.updateCurrentRow(row);
 			this.props.updateSelectedNumber("null");
+			this.props.checkCurrenRow();
 		}
+	};
+
+	submitRow = () => {
+		this.props.submitRow();
 	};
 
 	render() {
@@ -32,7 +38,8 @@ class MainBoard extends PureComponent {
 						width: 20,
 						height: 20,
 						backgroundColor: color,
-						border: 0
+						border: 0,
+						borderRadius: 30
 					}}
 					key={index}
 					id={index}
@@ -40,7 +47,13 @@ class MainBoard extends PureComponent {
 				/>
 			);
 		});
-		return <div>{currentRow}</div>;
+		return (
+			<div>
+				<span>{currentRow}</span>
+
+				<CheckRowButton />
+			</div>
+		);
 	}
 }
 
@@ -51,6 +64,7 @@ export default connect(
 	}),
 	{
 		updateCurrentRow: actions.updateCurrentRow,
+		checkCurrenRow: actions.checkCurrenRow,
 		updateSelectedNumber: actions.updateSelectedNumber
 	}
 )(MainBoard);
